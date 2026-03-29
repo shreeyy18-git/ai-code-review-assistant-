@@ -1,5 +1,11 @@
 # AI Code Review Assistant 🤖✨
 
+**Developed by Shreeyash Asati (ML Engineer)**
+
+🌟 **Live API Endpoint**: [Test the Code Reviewer Here](https://ai-code-review-assistant-n7po.onrender.com/docs#/)  
+📸 **Instagram**: [@learnedge.co.in](https://www.instagram.com/learnedge.co.in)  
+📧 **Contact**: [learnedge.asper@gmail.com](mailto:learnedge.asper@gmail.com)  
+
 An intelligent, asynchronous FastAPI backend that acts as an expert programming mentor. It receives student code submissions and leverages Groq's Lightning-Fast AI (Llama 3.1) to automatically analyze, review, and fix syntax and structural bugs.
 
 ---
@@ -118,5 +124,3 @@ The primary code-review endpoint is located at `POST /api/v1/review-code`.
 ├── run.py                       # Uvicorn boot script
 └── README.md                    # You are here!
 ```
-developed by shreeyash Asati
- 
