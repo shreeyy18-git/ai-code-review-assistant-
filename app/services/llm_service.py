@@ -3,7 +3,7 @@ from groq import AsyncGroq
 from app.core.config import settings
 from app.core.exceptions import LLMServiceError
 from app.utils.logger import setup_logger
-from app.models.response import CodeReviewResponse
+from app.models.response import CodeReviewResponse, PrepPlannerResponse
 
 logger = setup_logger(__name__)
 
@@ -32,3 +32,24 @@ async def analyze_code(prompt: str) -> CodeReviewResponse:
     except Exception as e:
         logger.error(f"LLM Error: {e}")
         raise LLMServiceError(f"Failed to generate review: {str(e)}")
+
+
+async def generate_prep_plan(prompt: str) -> PrepPlannerResponse:
+    try:
+        response = await client.chat.completions.create(
+            model="llama-3.1-8b-instant",
+            response_format={"type": "json_object"},
+            messages=[
+                {"role": "system", "content": "You are an expert study planner and learning coach. Always respond with valid JSON matching the exact schema requested."},
+                {"role": "user", "content": prompt}
+            ],
+            temperature=0.4
+        )
+        content = response.choices[0].message.content
+        logger.info("Successfully fetched prep plan from LLM.")
+        
+        result = json.loads(content)
+        return PrepPlannerResponse(**result)
+    except Exception as e:
+        logger.error(f"LLM Error (Prep Planner): {e}")
+        raise LLMServiceError(f"Failed to generate prep plan: {str(e)}")

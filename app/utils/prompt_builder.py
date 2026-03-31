@@ -14,6 +14,7 @@ STRICT RULES:
 - ALWAYS provide fixed_code.
 - BE ACCURATE IN YOUR RESPONSE
 - DON'T HALLUCINATE IN ANY CASE
+- WORD LIMIT: Ensure the combined length of 'explanation', 'issues', and 'suggestion' is between 100 and 150 words.
 
 Problem:
 {problem}
