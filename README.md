@@ -1,254 +1,118 @@
-# \# AI Code Review Assistant 🤖✨
-
-# 
-
-# \*\*Developed by Shreeyash Asati (ML Engineer)\*\*
-
-# 
-
-# 🌟 \*\*Live API Endpoint\*\*: \[Test the Code Reviewer Here](https://ai-code-review-assistant-n7po.onrender.com/docs#/)  
-
-# 📸 \*\*Instagram\*\*: \[@learnedge.co.in](https://www.instagram.com/learnedge.co.in)  
-
-# 📧 \*\*Contact\*\*: \[learnedge.asper@gmail.com](mailto:learnedge.asper@gmail.com)  
-
-# 
-
-# An intelligent, asynchronous FastAPI backend that acts as an expert programming mentor. It receives student code submissions and leverages Groq's Lightning-Fast AI (Llama 3.1) to automatically analyze, review, and fix syntax and structural bugs.
-
-# 
-
-# \---
-
-# 
-
-# \## 🚀 Key Features
-
-# 
-
-# \* \*\*Mentorship-Driven Reviews\*\*: Doesn't just give the answer—identifies exact bugs (Syntax, Logical, Type), explains why they happen, and provides a gentle hint.
-
-# \* \*\*Strict Structured JSON Output\*\*: Guarantees that the LLM responds with a strongly typed JSON schema containing the status, issues array, explanation, hint, and the completely fixed code string.
-
-# \* \*\*Intelligent Auto-Language Detection\*\*: The AI mentor auto-detects whatever programming language the student typed (Python, Java, C++, JS, etc.) and strictly provides the `fixed\_code` in the exact same language.
-
-# \* \*\*Resilient "Fuzzy" API Keys\*\*: The API accepts virtually any spelling variation of typical frontend code requests (`question name`, `question\_name`, `studentId`, `student\_solution`, `code`, etc.) blocking generic `422 Unprocessable Content` errors.
-
-# \* \*\*Dynamic Problem Recognition\*\*: If the submitted coding problem is already stored in the local `questions.json` database, it relies on heavily verified expected approaches. If the problem is unknown, the LLM dynamically deduces the intent from the code itself.
-
-# 
-
-# \---
-
-# 
-
-# \## 🛠️ Technology Stack
-
-# 
-
-# \* \*\*Framework\*\*: \[FastAPI](https://fastapi.tiangolo.com/)
-
-# \* \*\*Runtime Data Validation\*\*: \[Pydantic V2](https://docs.pydantic.dev/latest/)
-
-# \* \*\*AI Provider\*\*: \[Groq API](https://groq.com/) using `llama-3.1-8b-instant`
-
-# \* \*\*Python ASGI Server\*\*: \[Uvicorn](https://www.uvicorn.org/)
-
-# 
-
-# \---
-
-# 
-
-# \## ⚙️ Installation \& Setup
-
-# 
-
-# 1\. \*\*Clone the repository\*\*
-
-# &#x20;  ```bash
-
-# &#x20;  git clone https://github.com/learnedge-team/LearnEdge-LLM-AI-Code-Review-Assistant.git
-
-# &#x20;  cd ai-code-review-assistant-
-
-# &#x20;  ```
-
-# 
-
-# 2\. \*\*Set up a Virtual Environment (Optional but Recommended)\*\*
-
-# &#x20;  ```bash
-
-# &#x20;  python -m venv .venv
-
-# &#x20;  .\\.venv\\Scripts\\activate
-
-# &#x20;  ```
-
-# 
-
-# 3\. \*\*Install Dependencies\*\*
-
-# &#x20;  ```bash
-
-# &#x20;  pip install -r requirements.txt
-
-# &#x20;  ```
-
-# 
-
-# 4\. \*\*Environment Variables\*\*
-
-# &#x20;  Create a `.env` file in the root directory and add your Groq API Key:
-
-# &#x20;  ```env
-
-# &#x20;  GROQ\_API\_KEY=your\_groq\_api\_key\_here
-
-# &#x20;  ```
-
-# 
-
-# \---
-
-# 
-
-# \## 🏃‍♂️ Running the Server
-
-# 
-
-# Start the application gracefully via Uvicorn:
-
-# ```bash
-
-# python run.py
-
-# ```
-
-# \*The server will boot up with automatic hot-reloading enabled by default and will be accessible at `http://127.0.0.1:8000`.\*
-
-# 
-
-# \---
-
-# 
-
-# \## 📡 API Usage
-
-# 
-
-# The primary code-review endpoint is located at `POST /api/v1/review-code`. 
-
-# 
-
-# \*(You can also securely test or mock it dynamically using the auto-generated Swagger UI at \[http://localhost:8000/docs](http://127.0.0.1:8000/docs))\*
-
-# 
-
-# \### \*\*Sample Payload Request:\*\*
-
-# ```json
-
-# {
-
-# &#x20; "question name": "Two Sum",
-
-# &#x20; "student id": "student\_993",
-
-# &#x20; "student solution": "def add(a, b):\\n    return a - b"
-
-# }
-
-# ```
-
-# 
-
-# \### \*\*Sample JSON Response:\*\*
-
-# ```json
-
-# {
-
-# &#x20; "student\_id": "student\_993",
-
-# &#x20; "status": "needs\_work",
-
-# &#x20; "issues": \[
-
-# &#x20;   "Logical Error: The function subtracts the arguments instead of adding them."
-
-# &#x20; ],
-
-# &#x20; "fixed\_code": "def add(a, b):\\n    return a + b",
-
-# &#x20; "explanation": "To solve standard 'Two Sum' logic, we are tasked with combining elements together. The code was using the '-' mathematical subtraction operator instead.",
-
-# &#x20; "hint": "Check exactly what operator you placed inside the return statement!"
-
-# }
-
-# ```
-
-# 
-
-# \---
-
-# 
-
-# \## 📁 Project Structure
-
-# 
-
-# ```text
-
-# ├── app/
-
-# │   ├── api/
-
-# │   │   └── routes.py            # FastAPI Routing
-
-# │   ├── core/
-
-# │   │   ├── config.py            # Environment configurations
-
-# │   │   └── exceptions.py        # Error \& Exception Handling
-
-# │   ├── db/
-
-# │   │   └── questions.json       # Optional Problem Statement definitions
-
-# │   ├── models/
-
-# │   │   ├── request.py           # Robust Pydantic inputs
-
-# │   │   └── response.py          # Expected JSON structure
-
-# │   ├── services/
-
-# │   │   ├── llm\_service.py       # Asynchronous Graq AI client connection
-
-# │   │   ├── retrieval.py         # DB Search logic
-
-# │   │   └── review\_service.py    # Main Business Logic
-
-# │   └── utils/
-
-# │       ├── logger.py            # Printouts and telemetry
-
-# │       └── prompt\_builder.py    # Heavily engineered System Prompts
-
-# ├── .env                         # API Keys (Ignored by Git)
-
-# ├── .gitignore                   
-
-# ├── requirements.txt             # Pip dependencies
-
-# ├── run.py                       # Uvicorn boot script
-
-# └── README.md                    # You are here!
-
-# ```
-
-
-
+# AI Code Review Assistant 🤖✨
+
+**Developed by Shreeyash Asati (ML Engineer)**
+
+🌟 **Live API Endpoint**: [Test the Code Reviewer Here](https://ai-code-review-assistant-n7po.onrender.com/docs#/)  
+📸 **Instagram**: [@learnedge.co.in](https://www.instagram.com/learnedge.co.in)  
+📧 **Contact**: [learnedge.asper@gmail.com](mailto:learnedge.asper@gmail.com)  
+
+An intelligent, asynchronous FastAPI backend that acts as an expert programming mentor and preparation planner. It leverages Groq's Lightning-Fast AI (Llama 3.1) to analyze student code and generate ultimate study plans.
+
+---
+
+## 🚀 Key Features
+
+### 1. Mentorship-Driven Code Reviews (`/review-code`)
+* **Bug Detection**: Identifies exact bugs (Syntax, Logical, Type) and explains why they happen.
+* **Auto-Language Detection**: Supports Python, Java, C++, JS, etc., and provides the `fixed_code` in the exact same language.
+* **Fuzzy Parsing**: Accepts various naming conventions (`question name`, `student_solution`, etc.) to prevent `422` errors.
+* **Dynamic Logic**: Uses a local `questions.json` for verified answers or dynamically deduces the intent for unknown problems.
+
+### 2. Ultimate 1-Day Prep Planner (`/prep-planner`)
+* **High-Intensity Strategy**: Generates a complete 24-hour mission-critical study plan.
+* **Time-Blocked Schedule**: Breaks the day into Morning, Afternoon, Evening, and Night sessions.
+* **Top 5 Important Questions**: Provides the 4-5 most likely interview/exam questions for the chosen domain.
+* **Quick Resources**: Recommends the fastest learning materials (Videos/Articles) for 1-day success.
+
+---
+
+## 🛠️ Technology Stack
+
+* **Framework**: [FastAPI](https://fastapi.tiangolo.com/)
+* **AI Provider**: [Groq API](https://groq.com/) using `llama-3.1-8b-instant`
+* **Validation**: [Pydantic V2](https://docs.pydantic.dev/latest/)
+* **Runtime**: [Uvicorn](https://www.uvicorn.org/)
+
+---
+
+## 📡 API Usage
+
+### **1. Code Review (`POST /api/v1/review-code`)**
+**Request:**
+```json
+{
+  "question_name": "Two Sum",
+  "student_id": "STU123",
+  "student_solution": "def add(a, b):\n    return a - b"
+}
+```
+**Response:**
+```json
+{
+  "status": "needs_work",
+  "issues": ["Logical Error detected..."],
+  "fixed_code": "def add(a, b):\n    return a + b",
+  "explanation": "...",
+  "hint": "..."
+}
+```
+
+### **2. Prep Planner (`POST /api/v1/prep-planner`)**
+**Request:**
+```json
+{
+  "student_id": "STU123",
+  "domain": "Web Development",
+  "topics": "React Hooks, Next.js Routing",
+  "level": "Beginner"
+}
+```
+**Response:**
+```json
+{
+  "study_plan_title": "Ultimate 1-Day Prep Plan for Web Development",
+  "daily_schedule": [...],
+  "important_questions": [
+    {
+      "question": "What is the difference between UseState and UseEffect?",
+      "priority": "High"
+    }
+  ],
+  "tips": "Focus on..."
+}
+```
+
+---
+
+## ⚙️ Quick Start
+
+1. **Clone & Setup**
+   ```bash
+   git clone https://github.com/learnedge-team/LearnEdge-LLM-AI-Code-Review-Assistant.git
+   pip install -r requirements.txt
+   ```
+
+2. **Environment**
+   Add your `GROQ_API_KEY` to the `.env` file.
+
+3. **Run**
+   ```bash
+   python run.py
+   ```
+
+---
+
+## 📁 Project Structure
+
+```text
+├── app/
+│   ├── api/routes.py            # API Endpoints
+│   ├── models/                  # Pydantic Schemas (Request/Response)
+│   ├── services/
+│   │   ├── review_service.py    # Code Review Logic
+│   │   └── prep_service.py      # Study Plan Logic
+│   ├── utils/prompt_builder.py  # AI Prompt Engineering
+│   └── main.py                  # App Entry Point
+├── main.py                      # Root Entry for Render
+└── run.py                       # Local Run Script
+```
